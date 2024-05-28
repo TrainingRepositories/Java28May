@@ -9,6 +9,10 @@ public class Student {
     private String name;
     private int age;
 
+    public Student(){
+
+    }
+
     public Student(StudentEntity entity){
         this.id = entity.getId();
         this.name = entity.getName();

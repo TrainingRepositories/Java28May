@@ -2,6 +2,8 @@ package com.ksa.jodayn.controllers;
 
 import com.ksa.jodayn.dto.Student;
 import com.ksa.jodayn.services.StudentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,10 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+        return new ResponseEntity<>(
+                studentService.addStudent(student),
+                HttpStatus.CREATED);
     }
 
 }
