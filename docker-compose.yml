@@ -1,0 +1,23 @@
+version: "3.9"
+  
+services: 
+
+  pgsql:
+    build:
+        context: DataBases/PostgreSQL/docker/
+        dockerfile: Dockerfile
+    env_file: DataBases/PostgreSQL/docker/.env
+    ports: 
+        - '5321:5432'        
+    volumes:
+        - 'my_db_vol:/var/lib/postgresql/data'
+    networks:
+        - myAppNetwork
+        
+networks:
+    myAppNetwork:
+        driver: bridge
+ 
+volumes:
+    my_db_vol:
+        driver: local
