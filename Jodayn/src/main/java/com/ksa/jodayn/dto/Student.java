@@ -9,11 +9,17 @@ public class Student {
     private String name;
     private int age;
 
-    public Student(){
+    public Student() {
 
     }
 
-    public Student(StudentEntity entity){
+    public Student(Long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public Student(StudentEntity entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.age = entity.getAge();
