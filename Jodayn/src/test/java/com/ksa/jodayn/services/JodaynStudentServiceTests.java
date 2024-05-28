@@ -13,8 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import static com.ksa.jodayn.Util.createStudentsEntities;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 
@@ -37,6 +39,20 @@ class JodaynStudentServiceTests {
     void getStudentsTest() {
         List<StudentEntity> testStudents = createStudentsEntities();
         when(repo.findAll()).thenReturn(testStudents);
+
+        when(repo.findById(anyLong())).thenAnswer(invocationOnMock -> {
+                    long id = invocationOnMock.getArgument(0);
+                    return testStudents.stream().filter(student -> student.getId() == id)
+                            .findFirst();
+                }
+
+        );
+
+        Optional<StudentEntity> entity = repo.findById(2L);
+        assert (entity.isPresent());
+        assert (entity.get().getId() == 2L);
+
+
         List<StudentEntity> sortedStudents = new java.util.ArrayList<>(testStudents.stream().map(StudentEntity::new).toList());
         sortedStudents.sort(Comparator.comparing(StudentEntity::getName));
         List<Student> students = studentService.getSortedStudents();
