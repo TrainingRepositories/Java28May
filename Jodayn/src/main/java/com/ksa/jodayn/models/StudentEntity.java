@@ -21,9 +21,17 @@ public class StudentEntity {
 
     }
 
+    public StudentEntity(StudentEntity entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.age = entity.getAge();
+    }
+
     public StudentEntity(Student student) {
         this.id = student.getId();
         this.name = student.getName();
         this.age = student.getAge();
     }
+
+
 }
