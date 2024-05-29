@@ -54,3 +54,26 @@ class MacCheckbox implements Checkbox {
         System.out.println("Mac Checkbox");
     }
 }
+
+
+class Screen{
+    private Button button1;
+    private Button button2;
+
+    public Screen(GUIFactory factory){
+        button1 = factory.createButton();
+        button2 = factory.createButton();
+    }
+
+    public void clickButton1(){
+        button1.paint();
+    }
+
+}
+
+class MainX{
+    public static void main(String[] args) {
+        Screen screen = new Screen(new WinFactory());
+
+    }
+}

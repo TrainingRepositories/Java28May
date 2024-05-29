@@ -1,34 +1,82 @@
 package com.ksa.jodayn.design.patterns;
 
-interface MyComponent {
-    void operation();
+interface Coffee {
+    String getDescription();
+    double getCost();
 }
 
-class ConcreteComponent implements MyComponent {
-    public void operation() {
-        System.out.println("ConcreteComponent");
-    }
-}
-
-abstract class Decorator implements MyComponent {
-    protected MyComponent component;
-
-    public Decorator(MyComponent component) {
-        this.component = component;
+final class SimpleCoffee implements Coffee {
+    @Override
+    public String getDescription() {
+        return "Simple Coffee";
     }
 
-    public void operation() {
-        component.operation();
+    @Override
+    public double getCost() {
+        return 5.0;
     }
 }
 
-class ConcreteDecorator extends Decorator {
-    public ConcreteDecorator(MyComponent component) {
-        super(component);
+abstract class CoffeeDecorator implements Coffee {
+    protected Coffee decoratedCoffee;
+
+    public CoffeeDecorator(Coffee coffee) {
+        this.decoratedCoffee = coffee;
     }
 
-    public void operation() {
-        super.operation();
-        System.out.println("ConcreteDecorator");
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription();
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost();
+    }
+}
+
+class MilkDecorator extends CoffeeDecorator {
+    public MilkDecorator(Coffee coffee) {
+        super(coffee);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription() + ", Milk";
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost() + 1.5;
+    }
+}
+
+class SugarDecorator extends CoffeeDecorator {
+    public SugarDecorator(Coffee coffee) {
+        super(coffee);
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedCoffee.getDescription() + ", Sugar";
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedCoffee.getCost() + 0.5;
+    }
+}
+
+
+class MainR {
+    public static void main(String[] args) {
+        Coffee coffee = new SimpleCoffee();
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
+
+        coffee = new MilkDecorator(coffee);
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
+
+        coffee = new SugarDecorator(coffee);
+        System.out.println(coffee.getDescription() + " $" + coffee.getCost());
     }
 }

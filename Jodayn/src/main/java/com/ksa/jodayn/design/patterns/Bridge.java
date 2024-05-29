@@ -1,37 +1,62 @@
 package com.ksa.jodayn.design.patterns;
 
-interface Implementor {
-    void operationImpl();
+interface BankOperations {
+    void doOperation();
 }
 
-class ConcreteImplementorA implements Implementor {
-    public void operationImpl() {
-        System.out.println("Implementation A");
+class IslamicBankOperations implements BankOperations {
+    @Override
+    public void doOperation() {
+        System.out.println("Islamic Bank Operations");
     }
 }
 
-class ConcreteImplementorB implements Implementor {
-    public void operationImpl() {
-        System.out.println("Implementation B");
+class NonIslamicBankOperations implements BankOperations {
+    @Override
+    public void doOperation() {
+        System.out.println("NonIslamic Bank Operations");
     }
 }
 
-abstract class Abstraction {
-    protected Implementor implementor;
+abstract class BankWithOperations {
+    protected final BankOperations operations;
 
-    public Abstraction(Implementor implementor) {
-        this.implementor = implementor;
+    BankWithOperations(BankOperations operations) {
+        this.operations = operations;
     }
 
-    public abstract void operation();
+    public abstract void doOperation();
 }
 
-class RefinedAbstraction extends Abstraction {
-    public RefinedAbstraction(Implementor implementor) {
-        super(implementor);
+class Bank extends BankWithOperations {
+
+    Bank(BankOperations operations) {
+        super(operations);
     }
 
-    public void operation() {
-        implementor.operationImpl();
+    @Override
+    public void doOperation() {
+        operations.doOperation();
+    }
+}
+
+class IsamicBank extends Bank{
+
+    IsamicBank() {
+        super(new IslamicBankOperations());
+    }
+}
+
+class NonIsamicBank extends Bank{
+    NonIsamicBank() {
+        super(new NonIslamicBankOperations());
+    }
+}
+
+
+class MainY{
+    public static void main(String[] args) {
+        Bank bank = new IsamicBank();
+        bank.doOperation();
     }
 }
